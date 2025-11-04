@@ -30,3 +30,8 @@ extend-select = ["I"]  # Add import sorting
 known-first-party = ["mlops"]
 force-sort-within-sections = true
 
+[tool.mypy]
+strict = true
+exclude = [
+    "__pycache__",
+]

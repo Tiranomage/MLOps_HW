@@ -5,4 +5,7 @@ python-dotenv
 ruff
 tqdm
 typer
+flake8
+mypy
+pre-commit
 -e .
