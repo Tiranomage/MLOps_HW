@@ -59,3 +59,42 @@ MLOps homework
 
 --------
 
+## Установка и настройка окружения (с использованием uv)
+
+1.  Клонируйте репозиторий:
+    ```bash
+    git clone https://github.com/Tiranomage/MLOps_HW.git
+    cd MLOps_HW
+    ```
+
+2.  Установите зависимости разработки с помощью `uv`:
+    ```bash
+    uv venv  
+    source .venv/bin/activate
+    uv pip install -e .[dev]
+    ```
+
+3.  Установите pre-commit хуки:
+    ```bash
+    pre-commit install
+    ```
+
+## Запуск пайплайна с S3 (MinIO)
+
+1.  Убедитесь, что у вас установлен Docker и Docker Compose.
+2.  Запустите MinIO в контейнере:
+    ```bash
+    ./scripts/start_minio.sh
+    ```
+3.  Создайте bucket (например, `mlops-hw`) в MinIO Console ([http://localhost:9001](http://localhost:9001), логин: `minioadmin`, пароль: `minioadmin`).
+4.  Загрузите ваш датасет в созданный bucket через веб-интерфейс или `aws-cli`/`s3cmd`.
+5.  Убедитесь, что виртуальное окружение активировано (см. раздел "Установка и настройка окружения").
+6.  Запустите пайплайн:
+    ```bash
+    ./run_pipeline.sh
+    ```
+    Скрипт скачает файл из S3, выполнит обработку (см. `src/mlops/data_processor.py`) и загрузит результат обратно в S3 в тот же bucket.
+7.  После завершения работы остановите MinIO:
+    ```bash
+    ./scripts/stop_minio.sh
+    ```
