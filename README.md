@@ -98,3 +98,25 @@ MLOps homework
     ```bash
     ./scripts/stop_minio.sh
     ```
+
+## Запуск ML-экспериментов с MLflow
+
+1.  Убедитесь, что у вас установлен Docker и Docker Compose.
+2.  Запустите инфраструктуру (MinIO и MLflow):
+    ```bash
+    source venv/bin/activate
+    ./scripts/start_infra.sh
+    ```
+3.  Дождитесь запуска сервисов. MinIO будет доступен на [http://localhost:9001](http://localhost:9001), MLflow на [http://localhost:5000](http://localhost:5000).
+4.  Убедитесь, что ваш датасет (например, `titanic.csv`) загружен в bucket `my-dataset-bucket` в MinIO.
+5.  Убедитесь, что в MinIO создан bucket `mlflow-artifacts` для хранения артефактов моделей.
+6.  Запустите сеточный поиск экспериментов:
+    ```bash
+    python scripts/run_grid_search.py --base-config-file configs/train_config_example.json --input-s3-path my-dataset-bucket/titanic.csv
+    ```
+    Скрипт загрузит датасет из S3, обучит модели с различными комбинациями гиперпараметров, залогирует результаты в MLflow и сохранит модели в S3 bucket `mlflow-artifacts`.
+7.  Отслеживайте прогресс экспериментов в интерфейсе MLflow: [http://localhost:5000](http://localhost:5000).
+8.  После завершения работы остановите инфраструктуру:
+    ```bash
+    ./scripts/stop_minio.sh
+    ```
