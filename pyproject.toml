@@ -43,7 +43,7 @@ known-first-party = ["mlops"]
 force-sort-within-sections = true
 
 [tool.mypy]
-python_version = "3.10" # Укажите версию, соответствующую requires-python
+python_version = "3.10"
 strict = true
 exclude = [
     "__pycache__"
