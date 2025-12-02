@@ -80,3 +80,8 @@ export PRINT_HELP_PYSCRIPT
 
 help:
 	@$(PYTHON_INTERPRETER) -c "${PRINT_HELP_PYSCRIPT}" < $(MAKEFILE_LIST)
+
+install-dev-uv: 
+    uv venv
+    uv pip install -e .[dev]
+    uv run pre-commit install 
